@@ -1,301 +1,462 @@
-﻿<h1>Bai 1</h1>
-<div>
+﻿<head>
+    <style>
+
+        #bai1 {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 1.2rem
+        }
+            #bai1 img {
+                height: 50px
+            }
+            #bai1 h1 strong {
+                color: #008cff
+            }
+            #bai1 button {
+                background: #202020;
+                color: #fff;     
+                border: none;
+                width: 140px
+            }
+            #bai1 button:nth-child(2) {
+                background: #2d2d2d
+            }
+
+         hr {
+             border: none; 
+             height: 5000px; 
+             background: #000; 
+         }
+
+        #bai2 {
+            display: flex;
+            flex-direction: column;
+            align-items: center; 
+            text-align: center; 
+            gap: 24px;
+            background: #f3f5f7; 
+        }
+
+            #bai2 img {
+                width: 60px;
+                height: 60px;
+                border-radius: 50%; 
+                object-fit: fill;
+            }
+            #bai2 input[type=email] {
+                width: 280px; 
+                border: 1px solid #ccc;
+            }
+            #bai2 button {
+                background: #49c5d9;
+                color: #fff;
+                border: none;
+                width: 160px;
+            }
+            #bai2 form {
+                display: flex;
+                justify-content: center
+            }
+
+        #bai3 {
+            display: flex;
+            justify-content: space-around;
+            background: #1f2a3b;
+            color: #fff;
+            text-align: center
+        }
+
+            #bai3 > div {
+                flex: 1
+            }
+        /* ---------- Bai 4 ---------- */
+        #bai4 {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 14px;
+            background: #f7f8f9
+        }
+
+            #bai4 .grid {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
+                width: 100%
+            }
+
+            #bai4 .card {
+                flex: 1 0 220px;
+                border: 1px solid #e5e5e5;
+                display: flex;
+                flex-direction: column
+            }
+
+                #bai4 .card img {
+                    width: 100%;
+                    height: 160px;
+                    object-fit: cover;
+                    background: #7fd1d9
+                }
+
+                #bai4 .card h4 {
+                    font-weight: 600
+                }
+
+                #bai4 .card p {
+                    color: #666
+                }
+
+        #bai5 {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem
+        }
+
+            #bai5 .row {
+                display: flex;
+                gap: 1rem
+            }
+
+            #bai5 input, #bai5 textarea {
+                border: 1px solid #ccc;
+                width: 100%
+            }
+
+            #bai5 textarea {
+                height: 190px;
+                resize: vertical
+            }
+
+            #bai5 button {
+                background: #3db6ff;
+                color: #fff;
+                border: none;
+                width: 140px
+            }
+
+        /* ---------- Bai 6 ---------- */
+        #bai6 {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 2rem
+        }
+
+            #bai6 address, #bai6 p {
+                color: #555
+            }
+
+            #bai6 form input, #bai6 form textarea {
+                border: 1px solid #ccc;
+                width: 100%
+            }
+
+            #bai6 form textarea {
+                height: 190px;
+                resize: vertical
+            }
+
+            #bai6 form button {
+                background: #24c1b0;
+                color: #fff;
+                border: none;
+                width: 140px
+            }
+
+        /* ---------- Bai 7 ---------- */
+        #bai7 {
+            text-align: center;
+            background: #f5f7f9;
+            display: flex;
+            flex-direction: column;
+            gap: 1.4rem
+        }
+
+            #bai7 .underline {
+                width: 60px;
+                height: 3px;
+                background: #4d7cff;
+                margin: 0 auto
+            }
+
+            #bai7 .grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
+                gap: 1rem;
+                max-width: 1080px;
+                margin: 0 auto
+            }
+
+            #bai7 .card {
+                display: flex;
+                gap: 1rem
+            }
+
+            #bai7 .avatar {
+                width: 48px;
+                height: 48px;
+                border-radius: 50%;
+                background: #99d399;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: #fff
+            }
+
+            #bai7 em {
+                color: #555;
+                font-size: .9rem
+            }
+
+            #bai7 strong {
+                font-size: .9rem
+            }
+
+        #bai8 {
+            text-align: center
+        }
+
+            #bai8 h2 {
+                color: #f4c813
+            }
+
+
+            #bai8 .grid {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 20; 
+                max-width: 900px;
+                margin: 0 auto;
+            }
+
+
+                #bai8 .grid > div {
+                    flex-grow: 1;
+                    flex-shrink: 0;
+                    flex-basis: 320px;
+                }
+
+            #bai8 img {
+                max-width: auto ;
+                height: 120px;
+            }
+
+            #bai8 em {
+                color: #666;
+                font-size: .88rem;
+                max-width: 260px;
+                margin: 0 auto;
+            }
+</style>
+</head>
+
+
+
+<h1>Bai 1</h1>
+<section id="bai1">
+    <img src="/image/190x5.png" alt="190 × 50 logo placeholder">
     <div>
-        <img src="/image/190x5.png" alt="190x5">
+        <h1>Best <strong>Shared Hosting</strong> Company</h1>
+        <p>With this responsive landing page template, you can promote your all hosting, domain and email services.</p>
     </div>
-</div>
-<div>
-    <h1>Best <strong>Shared Hosting</strong> Company</h1>
-    <p>With this repsponsive page template, you can promote your all hosting, domain and email services</p>
-</div>
-<div>
-    <button>View Plans</button> <button>All Features</button>
-</div>
+    <div>
+        <a href=""><button>View Plans</button></a>
+        <a href="https://github.com/khoa2710/Store.WebUI"><button>All Features</button></a>
+    </div>
+</section>
+
+<hr style="height: 5px;">
 
 <h1>Bai 2</h1>
-<div>
-    <div>
-        <img src="/image/mail.png" alt="Mail" />
-    </div>
+
+<div id="bai2">
+    <div><img src="/image/mail.png" alt="Mail icon"></div>
+
     <div>
         <h2><strong>Get the invite</strong></h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing gelit. Aliquam viverra orci ut</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam viverra orci ut.</p>
     </div>
-    <div>
-        <input type="email" placeholder="Enter Email" />
-    </div>
+
+    <form><input type="email" placeholder="Enter Email"></form>
+
+    <div><button type="submit">Request Invite</button></div>
 </div>
+
+
+<hr style="height: 5px;">
+
 
 <h1>Bai 3</h1>
-<div>
+<section id="bai3">
+
     <div>
-        <div>
-            <div style="text-align:center">🌐</div>
-            <div style="text-align:center">🎓</div>
-            <div style="text-align:center">💡</div>
-            <div style="text-align:center">👤</div>
-        </div>
-        <div></div>
-        <div>
-            <div style="text-align:center">3297</div>
-            <div style="text-align:center">3700</div>
-            <div style="text-align:center">5034</div>
-            <div style="text-align:center">1080</div>
-        </div>
-        <div></div>
-        <div>
-            <div style="text-align:center">Foreign Followers</div>
-            <div style="text-align:center">Students Enrolled</div>
-            <div style="text-align:center">Classes Complete</div>
-            <div style="text-align:center">Certified Teachers</div>
-        </div>
+        <div>🌐</div> 
+        <div>3297</div>
+        <div>Foreign Followers</div>
     </div>
-</div>
+    <div>
+        <div>🎓</div>
+        <div>3700</div>
+        <div>Students Enrolled</div>
+    </div>
+    <div>
+        <div>💡</div>
+        <div>5034</div>
+        <div>Classes Complete</div>
+    </div>
+    <div>
+        <div>👤</div>
+        <div>1080</div>
+        <div>Certified Teachers</div>
+    </div>
+
+</section>
+
+
+<hr style="height: 5px;">
 
 <h1>Bai 4</h1>
-<div>
-    <h2 style=" text-align: center"> Our Service</h2>
-    <p style=" text-align: center">
-        Our Service unlimited solutions to all our business needs in the  intallation package we prepare search engin optimization<br>
-        social media support, we procvide corportate identity and graphic design services
-    </p>
 
-    <div>
-        <img src="" alt="hoc web chuan" />
-        <h4>Smart Watch Editions</h4> <p> Content</p>
+<section id="bai4">
+    <h2>Our Service</h2>
+    <p>Our Service unlimited solutions to all your business needs; in the installation package we prepare search engine optimization, social media support, corporate identity and graphic design services.</p>
+    <div class="grid">
+        <div class="card">
+            <img src="" alt="">
+            <h4>Smart Swatch Editions</h4>
+            <p>Aliquam sagittis ligula et sem lacinia, ut facilisis enim sollicitudin. Proin nisi est.</p>
+        </div>
+        <div class="card">
+            <img src="" alt="">
+            <h4>Web UI Kit Design</h4>
+            <p>Duis at tellus at dui tincidunt scelerisque nec sed felis. Suspendisse id dolor.</p>
+        </div>
+        <div class="card">
+            <img src="" alt="">
+            <h4>Mobile Optimization</h4>
+            <p>Etiam materials et mollis tellus, vel posuere nulla. Integer ultricies et magna.</p>
+        </div>
     </div>
+</section>
+<hr style="height: 5px;">
 
-    <div>
-        <img src="" alt="WebUI Kit Desing" />
-        <h4>Smart Watch Editions</h4> <p> Content</p>
-    </div>
-    <div>
-        <img src="" alt="Mobile Optimization" />
-        <h4>Smart Watch Editions</h4> <p> Content</p>
-    </div>
-</div>
-
+<!-- Bai 5 -->
 <h1>Bai 5</h1>
-<h5>Get in touch with us by filling contct form below</h5>
-<div>
-    <input type="text" placeholder="*Enter your full name" style="width: 250px;" />
-    <input type="email" placeholder="*Enter your email address" style="width: 250px;" />
-</div>
-<div>
-    <input type="text" placeholder="*Enter your subject" style="width: 500px;" />
-</div>
-<div>
-    <input type="text" placeholder="*Enter your message here" style="width: 500px; height: 300px" />
-</div>
+<section id="bai5">
+    <h5>Get in touch with us by filling contact form below</h5>
+    <div class="row">
+        <input type="text" placeholder="Enter your full name">
+        <input type="email" placeholder="Enter your email address">
+    </div>
+    <input type="text" placeholder="Enter your subject">
+    <textarea placeholder="Your message here…"></textarea>
+    <button>Send message</button>
+</section>
+<hr style="height: 5px;">
 
-
+<!-- Bai 6 -->
 <h1>Bai 6</h1>
-<h2>Contact us</h2>
-<hr style="width: 10%; height: 5px; color: yellow; height : 10px" />
-<div>
+<section id="bai6">
     <div>
-        <div>Contact Info</div>
-        <div> Haing Any Query! Or Book an appointment</div>
+        <h2>CONTACT US</h2>
+        <hr style="width:60px;height:3px;background:#f4c813;border:none">
+        <h3>Contact Info</h3>
+        <address>321 Awesome Street<br>New York, NY 17022</address>
+        <p>info@companyname.com</p>
+        <p>+1 800 123 1234</p>
     </div>
-    <div>
-        <div>
-            <address>
-                🏛️213 Awesome Street New York, NY 17022
-            </address>
-        </div>
-        <div>
-            <input type="text" placeholder="Your Name" style="width: 250px" />
-        </div>
-    </div>
+    <form>
+        <h3>Having Any Query! Or Book an appointment</h3>
+        <input type="text" placeholder="Your Name">
+        <input type="email" placeholder="Your Email">
+        <input type="text" placeholder="Subject">
+        <textarea placeholder="Message"></textarea>
+        <button>Send Message</button>
+    </form>
+</section>
+<hr style="height: 5px;">
 
-    <div>
-        <div>
-            <p>
-                ✉️ email@gmai.com
-            </p>
-        </div>
-        <div>
-            <input type="text" placeholder="Your your email" style="width: 400px" />
-        </div>
-    </div>
-    <div>
-        <div>
-            📞+123456789
-        </div>
-        <div>
-            <input type="text" placeholder="Subject" style="width: 400px" />
-        </div>
-    </div>
-    <div>
-        <div>
-        </div>
-        <div>
-            <input type="text" placeholder="Message" style="width: 400px; height: 400px" />
-        </div>
-    </div>
-    <div>
-        <div>
-        </div>
-        <div>
-            <button style="background-color:aquamarine; ">Send Message</button>
-        </div>
-    </div>
-</div>
-
+<!-- Bai 7 -->
 <h1>Bai 7</h1>
-<center>
+<section id="bai7">
     <h2>WHAT OUR CLIENTS SAY</h2>
-    <hr width="100" size="4" color="4d7cff">
-</center>
-<div style="width:90%; margin:0 auto;">
-    <div style="margin-bottom:60px;">
-        <div style="width:40%; display:inline-block; vertical-align:top;">
-            <div style="display:flex;">
-                <div style="width:70px;">
-                    <svg width="60" height="60">
-                        <circle cx="30" cy="30" r="40" fill="#fffff"></circle>
-                        <text x="30" y="38" text-anchor="middle" font-size="28" fill="#ffffff">Khoa</text>
-                    </svg>
-                </div>
-                <div>
-                    <em>
-                        “bla bla”
-                    </em>
-                    <br>
-                    <br>
-                    <strong>John Doe</strong>
-                </div>
+    <div class="underline"></div>
+    <div class="grid">
+        <div class="card">
+            <div class="avatar">H</div>
+            <div>
+                <em>"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam."</em>
+                <strong>John Doe</strong>
             </div>
         </div>
-
-        <!-- card 2 -->
-        <div style="width:40%; display:inline-block; vertical-align:top;">
-            <div style="display:flex;">
-                <div style="width:70px;">
-                    <svg width="60" height="60">
-                        <circle cx="30" cy="30" r="40" fill="#fffff"></circle>
-                        <text x="30" y="38" text-anchor="middle" font-size="28" fill="#ffffff">Khoa</text>
-                    </svg>
-                </div>
-
-                <div>
-                    <em>
-                        “bla bla”
-                    </em>
-                    <br>
-                    <br>
-                    <strong>Johnathan Doe</strong>
-                </div>
+        <div class="card">
+            <div class="avatar">H</div>
+            <div>
+                <em>"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam."</em>
+                <strong>Johnathan Doe</strong>
             </div>
         </div>
-
-        <!-- card 3 -->
-        <div style="width:40%; display:inline-block; vertical-align:top;">
-            <div style="display:flex;">
-                <div style="width:70px;">
-                    <svg width="60" height="60">
-                        <circle cx="30" cy="30" r="40" fill="#fffff"></circle>
-                        <text x="30" y="38" text-anchor="middle" font-size="28" fill="#ffffff">Khoa</text>
-                    </svg>
-                </div>
-
-                <div>
-                    <em>
-                        “bla bla”
-                    </em>
-                    <br>
-                    <br>
-                    <strong>John Doe</strong>
-                </div>
+        <div class="card">
+            <div class="avatar">H</div>
+            <div>
+                <em>"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam."</em>
+                <strong>John Doe</strong>
+            </div>
+        </div>
+        <div class="card">
+            <div class="avatar">H</div>
+            <div>
+                <em>"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam."</em>
+                <strong>Johnathan Doe</strong>
+            </div>
+        </div>
+        <div class="card">
+            <div class="avatar">H</div>
+            <div>
+                <em>"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam."</em>
+                <strong>John Doe</strong>
+            </div>
+        </div>
+        <div class="card">
+            <div class="avatar">H</div>
+            <div>
+                <em>"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam."</em>
+                <strong>Johnathan Doe</strong>
             </div>
         </div>
     </div>
-    <!--second row-->
+</section>
+<hr style="height: 5px;">
 
-    <div style="margin-bottom:60px;">
-        <!-- card 4 -->
-        <div style="width:40%; display:inline-block; vertical-align:top;">
-            <div style="display:flex;">
-                <div style="width:70px;">
-                    <svg width="60" height="60">
-                        <circle cx="30" cy="30" r="40" fill="#fffff"></circle>
-                        <text x="30" y="38" text-anchor="middle" font-size="28" fill="#ffffff">Khoa</text>
-                    </svg>
-                </div>
-
-                <div>
-                    <em>
-                        “bla blaaskdfaslkdf hjaskdf haslkfdjhas fkjahsf lakshjf laksdf”
-                    </em>
-                    <br><br>
-                    <strong>John Doe</strong>
-                </div>
-            </div>
-        </div>
-
-        <!-- card 5 -->
-        <div style="width:40%; display:inline-block; vertical-align:top;">
-            <div style="display:flex;">
-                <div style="width:70px;">
-                    <svg width="60" height="60">
-                        <circle cx="30" cy="30" r="40" fill="#fffff"></circle>
-                        <text x="30" y="38" text-anchor="middle" font-size="28" fill="#ffffff">Khoa</text>
-                    </svg>
-                </div>
-
-                <div>
-                    <em>
-                        “bla blaaskdfaslkdf hjaskdf haslkfdjhas fkjahsf lakshjf laksdf”
-                    </em>
-                    <br><br>
-                    <strong>Khoa Vo</strong>
-                </div>
-            </div>
-        </div>
-
-        <!-- card 6 -->
-        <div style="width:40%; display:inline-block; vertical-align:top;">
-            <div style="display:flex;">
-                <div style="width:70px;">
-                    <svg width="60" height="60">
-                        <circle cx="30" cy="30" r="40" fill="#fffff"></circle>
-                        <text x="30" y="38" text-anchor="middle" font-size="28" fill="#ffffff">Khoa</text>
-                    </svg>
-                </div>
-
-                <div>
-                    <em>
-                        “bla blaaskdfaslkdf hjaskdf haslkfdjhas fkjahsf lakshjf laksdf”
-                    </em>
-                    <br><br>
-                    <strong>John Doe</strong>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
+<!-- Bai 8 -->
 <h1>Bai 8</h1>
-
-<center style="color: yellow">
-    <h2><b>What Our Clients Say</b></h2>
-</center>
-
-<div>
-    <img src="/image/ipm.jpg" alt="IBM" />
-    <em>bla bla bla lasdkf;alsfjas;lfkjasdfl;ajsflasjkfasdfas</em>
-</div>
-<div>
-    <img src="/image/microsoft.png" alt="microsoft" />
-    <em>bla bla bla lasdkf;alsfjas;lfkjasdfl;ajsflasjkfasdfas</em>
-</div>
-<div>
-    <img src="/image/apple.png" alt="Apple" />
-    <em>bla bla bla lasdkf;alsfjas;lfkjasdfl;ajsflasjkfasdfas</em>
-</div>
-<div>
-    <img src="~/image/google.png" alt="Google" />
-    <em>bla bla bla lasdkf;alsfjas;lfkjasdfl;ajsflasjkfasdfas</em>
-</div>
-
+<section id="bai8">
+    <h2>What Our Clients Say</h2>
+    <div class="grid">
+        <div>
+            <img src="/image/ipm.jpg" alt="IBM">
+            <br>
+            <em>Sed vestibulum scelerisque urna, eu finibus leo facilisis sit amet. Proin id dignissim magna.</em>
+        </div>
+        <div>
+            <img src="/image/microsoft.png" alt="Microsoft">
+            <br>
+            <em>Donec euismod dolor ut ultricies consequat. Vivamus urna ipsum, rhoncus molestie neque ac.</em>
+        </div>
+        <div>
+            <img src="/image/apple.png" alt="Apple">
+            <br>
+            <em>In efficitur in velit et tempus. Duis nec odio dapibus, suscipit erat fringilla, imperdiet nibh.</em>
+        </div>
+        <div>
+            <img src="/image/google.png" alt="Google">
+            <br>
+            <em>Fusce pharetra erat id odio blandit, nec pharetra eros venenatis.</em>
+        </div>
+    </div>
+</section>
