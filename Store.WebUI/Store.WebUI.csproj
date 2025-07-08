@@ -5,7 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
-
+<!--
   <ItemGroup>
     <Content Remove="Views\Home\Bai2.cshtml" />
   </ItemGroup>
@@ -13,5 +13,5 @@
   <ItemGroup>
     <None Include="Views\Home\Bai2.cshtml" />
   </ItemGroup>
-
+-->
 </Project>

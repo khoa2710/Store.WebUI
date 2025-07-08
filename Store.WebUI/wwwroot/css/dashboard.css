@@ -1,0 +1,76 @@
+﻿/*  Dashboard flex-layout helper — no horizontal scrollbar, sidebar flush
+    with 48-px fixed navbar                                              */
+
+/* icon helper */
+.bi {
+    display: inline-block;
+    width: 1rem;
+    height: 1rem
+}
+
+/* never show a horizontal bar */
+html, body {
+    overflow-x: hidden
+}
+
+/* remove the default container gutters */
+.container-fluid {
+    padding-left: 0;
+    padding-right: 0
+}
+
+/* =====  DESKTOP  (≥ lg)  ===== */
+@media (min-width:992px) {
+    .navbar-brand {
+        flex: 0 0 250px; /* fixed 250 px – no growing/shrinking  */
+        width: 250px; /*   (helps older flexbox engines)      */
+
+    }
+    /* wrapper becomes side-by-side flex container */
+    .admin-layout {
+        display: flex
+    }
+
+    /* sidebar column */
+    .admin-sidebar {
+        flex: 0 0 250px; /* fixed 250 px, never shrinks        */
+        position: sticky;
+        top: 48px; /* sticks under the 48-px navbar      */
+        height: calc(100vh - 48px);
+        overflow-y: auto;
+        box-shadow: inset -1px 0 0 rgba(0,0,0,.1);
+        z-index: 100;
+    }
+
+    /* main area fills remaining width */
+    .admin-main {
+        flex: 1 1 auto;
+        padding: 0 1.5rem
+    }
+}
+
+/* sidebar nav tweaks from the Bootstrap demo */
+.admin-sidebar .nav-link {
+    font-size: .875rem;
+    font-weight: 500
+}
+
+    .admin-sidebar .nav-link.active {
+        color: #2470dc
+    }
+
+.sidebar-heading {
+    font-size: .75rem;
+    text-transform: uppercase
+}
+
+/* dark brand strip (purely cosmetic) */
+.navbar-brand {
+    padding: .75rem;
+    background: rgba(0,0,0,.25);
+    box-shadow: inset -1px 0 0 rgba(0,0,0,.25)
+}
+
+.navbar .form-control {
+    padding: .75rem 1rem
+}

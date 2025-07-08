@@ -12,7 +12,8 @@ namespace Store.WebUI.Controllers
         {
             _logger = logger;
         }
-
+        public IActionResult CreateCategory() => View();
+        public IActionResult CreateCustomer() => View();
         public IActionResult Index()
         {
             return View();
@@ -22,6 +23,11 @@ namespace Store.WebUI.Controllers
         {
             return View();
         }
+        public IActionResult Bai2() 
+        {
+            return View("Bai2");
+        }
+        
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
