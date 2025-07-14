@@ -1,0 +1,59 @@
+﻿@model EditCategorySubmitModel
+<div class="page-title">
+    <h1 class="small">
+        Caregory Add
+    </h1>
+</div>
+<div class="row">
+    <div class="col-12 col-md-6">
+        <div class="card">
+            <div class="card-body">
+                @using (Html.BeginForm("EditById", "Categories", FormMethod.Post))
+                {
+                    <div class="mb-4">
+                        @Html.LabelFor(x => x.Name, new { @class = "form-label" })
+                        @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+                        <div class="form-text text-danger">
+                            @Html.ValidationMessageFor(x => x.Name)
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        @Html.LabelFor(x => x.Description, new { @class = "form-label" })
+                        @Html.TextAreaFor(x => x.Description, new { @class = "form-control" })
+                        <div class="form-text text-danger">
+                            @Html.ValidationMessageFor(x => x.Description)
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        @Html.LabelFor(x => x.Icon, new { @class = "form-label" })
+                        @Html.TextAreaFor(x => x.Icon, new { @class = "form-control" })
+                        <div class="form-text text-danger">
+                            @Html.ValidationMessageFor(x => x.Icon)
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        @Html.LabelFor(x => x.Slug, new { @class = "form-label" })
+                        @Html.TextBoxFor(x => x.Slug, new { @class = "form-control" })
+                        <div class="form-text text-danger">
+                            @Html.ValidationMessageFor(x => x.Slug)
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        @Html.LabelFor(x => x.ImageUrl, new { @class = "form-label" })
+                        @Html.TextAreaFor(x => x.ImageUrl, new { @class = "form-control" })
+                        <div class="form-text text-danger">
+                            @Html.ValidationMessageFor(x => x.Icon)
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+
+                }
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script src="/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}

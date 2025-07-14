@@ -1,0 +1,37 @@
+﻿@model Store.WebUI.Models.ViewModel.GetByIdViewModel.OrdersGetByIdViewModel
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<head>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+</head>
+
+<h1>
+    Order Page
+</h1>
+
+<table class="table table-bordered">
+    <tr>
+        <th>Id</th>
+        <td>@Model.Order?.OrderId</td>
+    </tr>
+    <tr> 
+        <th>Product Name</th>
+        <td>@Model.Order?.ProductName</td>
+    </tr>
+    <tr>
+        <th>Product Id</th>
+        <td>@Model.Order?.ProductId</td>
+    </tr>
+    <tr> 
+        <th>Quantity</th>   
+        <td>@Model.Order?.Quantity</td>
+    </tr>
+    <tr>
+        <th>Price</th>
+        <td>@Model.Order?.Price</td>
+    </tr>
+</table>

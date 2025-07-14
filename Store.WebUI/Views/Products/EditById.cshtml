@@ -1,0 +1,66 @@
+﻿@model EditProductSubmitModel
+@{
+    //var categories = ViewBag.Categories;
+    // get view data from controller
+    var categorySelectOptions = ViewData["categories"] as List<CategoryDto>;
+}
+<div class="container py-4">
+    <h1 class="mb-4 text-center">Add Product</h1>
+    <div class="card shadow-sm">
+        <div class="card-body">
+          @using (Html.BeginForm(
+              "AddProduct", 
+              "Products", 
+              FormMethod.Post, 
+              new { @class = "row g-3" }))
+          {
+                <div class="col-md-6">
+                        @Html.LabelFor(m => m.Name, new { @class = "form-label" })
+                        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Name, null, new { @class = "text-danger small" })
+                </div>
+                <div class="col-md-6">
+                        @Html.LabelFor(m => m.Badges, new { @class = "form-label" })
+                        @Html.TextBoxFor(m => m.Badges, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Badges, null, new { @class = "text-danger small" })
+                </div>
+                <div class="col-md-6">
+                        @Html.LabelFor(m => m.CategoryId, new { @class = "form-label" })
+                        @Html.DropDownListFor( m => m.CategoryId,new SelectList(categorySelectOptions, "Id", "Name"),"Select category",new { @class = "form-select" })
+                        @Html.ValidationMessageFor(m => m.CategoryId, null, new { @class = "text-danger small" })
+                </div>
+                <div class="col-md-6">
+                      @Html.LabelFor(m => m.Price, new { @class = "form-label" })
+                      @Html.TextBoxFor(m => m.Price, new { @class = "form-control", type = "number", step = "0.01" })
+                      @Html.ValidationMessageFor(m => m.Price, null, new { @class = "text-danger small" })
+                </div>
+                <div class="col-12">
+                      @Html.LabelFor(m => m.Description, new { @class = "form-label" })
+                      @Html.TextAreaFor(m => m.Description, 3, 0, new { @class = "form-control" })
+                      @Html.ValidationMessageFor(m => m.Description, null, new { @class = "text-danger small" })
+                </div>
+                <div class="col-md-4">
+                      @Html.LabelFor(m => m.StockQuantity, new { @class = "form-label" })
+                      @Html.TextBoxFor(m => m.StockQuantity, new { @class = "form-control", type = "number" })
+                      @Html.ValidationMessageFor(m => m.StockQuantity, null, new { @class = "text-danger small" })
+                </div>
+                <div class="col-md-4">
+                      @Html.LabelFor(m => m.DiscountAmount, new { @class = "form-label" })
+                      @Html.TextBoxFor(m => m.DiscountAmount, new { @class = "form-control", type = "number" })
+                      @Html.ValidationMessageFor(m => m.DiscountAmount, null, new { @class = "text-danger small" })
+                </div>
+                <div class="col-md-4">
+                      @Html.CheckBoxFor(m => m.IsActive, new { @class = "form-check-input me-2" })
+                      @Html.LabelFor(m => m.IsActive, new { @class = "form-check-label" })
+                </div>
+                <div class="col-12 d-flex justify-content-end">
+                  <button type="submit" class="btn btn-primary">Create Product</button>
+                </div>
+          }
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script src="/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}

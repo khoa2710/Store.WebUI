@@ -1,0 +1,62 @@
+﻿    @model Store.WebUI.Models.ViewModel.HomeViewModel.HomeProductsViewModel
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<head>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+</head>
+<h1 class="mb-3 text-center">Products</h1>
+<a asp-action="AddProduct" class="btn btn-success mb-3">Add New Product</a>
+<table class="table table-bordered table-hover">
+    <thead class="table-light">
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Badge</th>
+            <th>Category Id</th>
+            <th>Category Name</th>
+            <th>Description</th>
+            <th>DiscountAmount</th>
+            <th>Image URL</th>
+            <th>IsActive</th>
+            <th>Price</th>
+            <th>StockQuantity</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Products)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Name</td>
+                <td>@string.Join(", ", item.Badges!)</td>
+                <td>@item.CategoryId</td>
+                <td>@item.CategoryName</td> 
+                <td>@item.Description</td>
+                <td>@item.DiscountAmount</td>
+                <td><img src="@item.ImageUrl" style="width: 100px; height: auto" alt="@item.Name" /></td>
+                <td>@item.IsActive</td>
+                <td>@item.Price</td>
+                <td>@item.StockQuantity</td>
+                <td>
+                    <div class="d-flex justify-content-center gap-2">
+                    <a href="@Url.Action("GetById", new{id = item.Id})" class="btn btn-outline-primary">
+                        Detail
+                    </a>
+                    <a href="@Url.Action("EditById", new{id = item.Id})" class="btn btn-dark">
+                        Edit
+                    </a>
+                    <form action="@Url.Action("DeleteById", new {id = item.Id})" method="post">
+                        <button type="submit" class=" btn btn-danger">Delete</button>
+                    </form>
+                    </div>
+                </td>
+               
+            </tr>
+        }
+    </tbody>
+</table>

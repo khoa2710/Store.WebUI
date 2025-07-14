@@ -1,0 +1,74 @@
+﻿<div class="card shadow mb-4">
+    <div class="card-header bg-primary text-white fw-semibold">
+        Quick Example – Category
+    </div>
+
+    <div class="card-body">
+        <form method="post" enctype="multipart/form-data">
+            <!-- Email -->
+            <div class="mb-4">
+                <label for="catEmail" class="form-label fw-semibold">Email address</label>
+                <input type="email" id="catEmail" name="Email"
+                       class="form-control form-control-lg" placeholder="Enter email">
+            </div>
+
+            <!-- Password + Confirm -->
+            <div class="mb-4">
+                <label for="catPwd" class="form-label fw-semibold">Password</label>
+                <input type="password" id="catPwd" name="Password"
+                       class="form-control form-control-lg" placeholder="Password">
+            </div>
+
+            <div class="mb-4">
+                <label for="catPwd2" class="form-label fw-semibold">Confirm password</label>
+                <input type="password" id="catPwd2" name="ConfirmPassword"
+                       class="form-control form-control-lg" placeholder="Re-enter password">
+            </div>
+
+            <!-- Description -->
+            <div class="mb-4">
+                <label for="catDesc" class="form-label fw-semibold">Description</label>
+                <textarea id="catDesc" name="Description" rows="3"
+                          class="form-control form-control-lg"
+                          placeholder="Enter description"></textarea>
+            </div>
+
+            <!-- Image upload -->
+            <div class="mb-4">
+                <label for="catImage" class="form-label fw-semibold">Upload image</label>
+                <div class="input-group">
+                    <input type="file" id="catImage" name="ImageFile"
+                           class="form-control form-control-lg" accept="image/*">
+                    <button type="button" class="btn btn-outline-secondary"
+                            onclick="document.getElementById('catImage').click()">
+                        Browse
+                    </button>
+                    <button type="submit" class="btn btn-outline-secondary">Upload</button>
+                </div>
+            </div>
+
+            <!-- Icon upload -->
+            <div class="mb-4">
+                <label for="catIcon" class="form-label fw-semibold">Upload icon</label>
+                <div class="input-group">
+                    <input type="file" id="catIcon" name="IconFile"
+                           class="form-control form-control-lg" accept="image/*">
+                    <button type="button" class="btn btn-outline-secondary"
+                            onclick="document.getElementById('catIcon').click()">
+                        Browse
+                    </button>
+                    <button type="submit" class="btn btn-outline-secondary">Upload</button>
+                </div>
+            </div>
+
+            <!-- Slug -->
+            <div class="mb-4">
+                <label for="catSlug" class="form-label fw-semibold">Slug</label>
+                <input type="text" id="catSlug" name="Slug"
+                       class="form-control form-control-lg" placeholder="e.g. summer-fashion">
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+        </form>
+    </div>
+</div>

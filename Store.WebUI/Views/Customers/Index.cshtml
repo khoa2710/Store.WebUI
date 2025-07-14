@@ -1,0 +1,49 @@
+﻿@model HomeCustomersViewModel
+
+@{
+    ViewData["Title"] = "Customers";
+}
+
+<div class="container py-4">
+    <h1 class="mb-3 text-center">Customers</h1>
+
+    <a asp-action="AddCustomer" class="btn btn-success mb-3">Add New Customer</a>
+
+    <table class="table table-bordered table-hover">    
+        <thead class="table-light">
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Address</th>
+                <th>Phone</th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Customers)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Name</td>
+                    <td>@item.Email</td>
+                    <td>@item.Address</td>
+                    <td>@item.Phone</td>
+                    <td>
+                        <div class="d-flex justify-content-center gap-2">
+                        <a href="@Url.Action("GetById", new{id = item.Id})" class="btn btn-outline-primary">
+                            Detail
+                        </a>
+                        <a href="@Url.Action("EditById", new{id = item.Id})" class="btn btn-dark">
+                            Edit
+                        </a>
+                        <form action="@Url.Action("DeleteById", new {id = item.Id})" method="post">
+                            <button type="submit" class=" btn btn-danger">Delete</button>
+                        </form>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,8 +1,29 @@
+using Microsoft.EntityFrameworkCore;
+using Store.WebUI.Data;
+using Store.WebUI.Repositories;
+using System;
+using WebAPI.Repositories;
+
 var builder = WebApplication.CreateBuilder(args);
 
+
+
+
+
+builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<IOrderDetailRepository, OrderDetailRepository>();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+//get connection stsrring
+var connectionString = builder.Configuration.GetConnectionString("Default");
+builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
+
+
+    
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

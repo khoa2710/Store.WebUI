@@ -1,0 +1,83 @@
+﻿@using Store.WebUI.Entity
+@model AddOrderSubmitModel
+@{
+    var customerSelectOptions = ViewData["customers"] as List<CustomerDto> ?? new List<CustomerDto>();
+    var productSelectOptions = ViewData["products"] as List<ProductDto> ?? new List<ProductDto>();
+}
+<div class="container py-4">
+    <h4 class="mb-4 text-center text-shadow ">Add Order</h4>
+    <div class="card shadow-sm">
+        <div class="card-body">
+            @using (Html.BeginForm("AddOrder", "Orders", FormMethod.Post, new { @class = "row g-3" }))
+            {
+                <div class="col-12">
+                    <h5 class="mb-3">Order Information</h5>
+                </div>
+                <div class="col-md-6">
+                    @Html.LabelFor(x => x.Name, new { @class = "form-label" })
+                    @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.Name, null, new { @class = "text-danger small" })
+                </div>
+                <div class="col-md-6">
+                    @Html.LabelFor(x => x.Status, new { @class = "form-label" })
+                    @Html.TextBoxFor(x => x.Status, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.Status, null, new { @class = "text-danger small" })
+                </div>
+                <div class="col-md-6">
+                    @Html.LabelFor(x => x.OrderAddress, new { @class = "form-label" })
+                    @Html.TextBoxFor(x => x.OrderAddress, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.OrderAddress, null, new { @class = "text-danger small" })
+                </div>
+                <div class="col-md-6">
+                    @Html.LabelFor(x => x.BillingAddress, new { @class = "form-label" })
+                    @Html.TextBoxFor(x => x.BillingAddress, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.BillingAddress, null, new { @class = "text-danger small" })
+                </div>
+                <div class="col-12">
+                    @Html.CheckBoxFor(x => x.IsActive, new { @class = "form-check-input me-2" })
+                    @Html.LabelFor(x => x.IsActive, new { @class = "form-check-label" })
+                    @Html.ValidationMessageFor(x => x.IsActive, null, new { @class = "text-danger small ms-2" })
+                </div>
+
+                <div class="col-12 mt-4">
+                    <h5 class="mb-3">Order Details</h5>
+                </div>
+                <div class="col-md-4">
+                    @Html.LabelFor(x => x.ProductId, new { @class = "form-label" })
+                    @Html.DropDownListFor(x => x.ProductId,
+                             new SelectList(productSelectOptions, "Id", "Name"),
+                             "Select product",
+                             new { @class = "form-select" })
+                    @Html.ValidationMessageFor(x => x.ProductId, null, new { @class = "text-danger small" })
+                </div>
+                <div class="col-md-4">
+                    @Html.LabelFor(x => x.Quantity, new { @class = "form-label" })
+                    @Html.TextBoxFor(x => x.Quantity, new { @class = "form-control", type = "number",  })
+                    @Html.ValidationMessageFor(x => x.Quantity, null, new { @class = "text-danger small" })
+                </div>
+                <div class="col-md-4">
+                    @Html.LabelFor(x => x.Price, new { @class = "form-label" })
+                    @Html.TextBoxFor(x => x.Price, new { @class = "form-control", type = "number" })
+                    @Html.ValidationMessageFor(x => x.Price, null, new { @class = "text-danger small" })
+                </div>
+                <div class="col-12">
+                    @Html.LabelFor(x => x.Note, new { @class = "form-label" })
+                    @Html.TextAreaFor(x => x.Note, 3, 0, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.Note, null, new { @class = "text-danger small" })
+                </div>
+
+                <div class="col-md-8">
+                    @Html.LabelFor(x => x.CustomerId, new { @class = "form-label" })
+                    @Html.DropDownListFor(x => x.CustomerId,
+                             new SelectList(customerSelectOptions, "Id", "Email"),
+                             "Select customer",
+                             new { @class = "form-select" })
+                    @Html.ValidationMessageFor(x => x.CustomerId, null, new { @class = "text-danger small" })
+                </div>
+                <div class="col-md-4 d-flex align-items-end">
+                    <button type="submit" class="btn btn-primary w-100">Submit Order</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>

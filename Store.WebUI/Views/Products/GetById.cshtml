@@ -1,0 +1,63 @@
+﻿@model Store.WebUI.Models.ViewModel.GetByIdViewModel.ProductsGetByIdViewModel
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<head>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+</head>
+
+<h1>
+    Product Page
+</h1>
+
+<table class="table table-bordered">
+    
+    <tr>
+        <th>Id</th>
+        <td>@Model.Product?.Id</td>
+        </tr>
+    <tr>
+        <th>Name</th>
+        <td>@Model.Product?.Name</td>
+        </tr>
+    <tr>
+        <th>Badge</th>
+        <td>@Model.Product?.Badges</td>
+        </tr>
+    <tr>
+        <th>Category Id</th>
+        <td>@Model.Product?.CategoryId</td>
+        </tr>
+    <tr>
+        <th>Category Name</th>
+        <td>@Model.Product?.CategoryName</td>
+        </tr>
+    <tr>
+        <th>Description</th>
+        <td>@Model.Product?.Description</td>
+        </tr>
+    <tr>
+        <th>DiscountAmount</th>
+        <td>@Model.Product?.DiscountAmount</td>
+        </tr>
+    <tr>
+        <th>Image URL</th>
+        <td><img src="@Model.Product?.ImageUrl" style="width: 100px; height: auto" alt="@Model.Product?.ImageUrl" /></td>
+        </tr>
+    <tr>
+        <th>IsActive</th>
+        <td>@Model.Product?.IsActive</td>
+        </tr>
+    <tr>
+        <th>Price</th>
+        <td>@Model.Product?.Price</td>
+        </tr>
+            
+    <tr>
+    <th>Stock Quantity</th>                
+    <td>@Model.Product?.StockQuantity</td>
+        </tr>
+</table>
