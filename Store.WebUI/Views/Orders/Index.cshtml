@@ -1,0 +1,55 @@
+﻿@* Views/Orders/Index.cshtml *@
+@model Store.WebUI.Models.ViewModel.HomeViewModel.HomeOrdersViewModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<head>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+</head>
+<h1 class="mb-3 text-center">Orders</h1>
+
+<a asp-action="AddOrder" class="btn btn-success mb-3">Add New Order and Order Details</a>
+<table class="table table-bordered table-hover">
+    <thead class="table-light">
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>OrderDate</th>
+            <th>OrderAddress</th>
+            <th>BillingAddress</th>
+            <th>IsActive</th>
+            <th>Note</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Orders)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Name</td>
+                <td>@item.OrderDate</td>
+                <td>@item.OrderAddress</td>
+                <td>@item.BillingAddress</td>
+                <td>@item.IsActive</td>
+                <td>@item.Note</td>
+                <td>
+                    <div class="d-flex justify-content-center gap-2">
+                        
+                        <a href="@Url.Action("GetById", new{id = item.Id})" class="btn btn-outline-primary">
+                            Detail
+                        </a>
+                        <a href="@Url.Action("EditById", new{id = item.Id})" class="btn btn-dark">
+                            Edit
+                        </a>
+                        <form action="@Url.Action("DeleteById", new {id = item.Id})" method="post">
+                            <button type="submit" class=" btn btn-danger">Delete</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,5 +1,5 @@
 ﻿@{
-    Layout = null;
+    // Layout = null;
     ViewData["Title"] = "Admin Dashboard";
 }
 
@@ -24,36 +24,43 @@
         <aside class="admin-sidebar bg-body-tertiary border-end">
             <nav class="py-3 px-2">
                 <ul class="nav flex-column gap-1">
+                    @*Dashboard*@
                     <li class="nav-item">
                         <a class="nav-link d-flex align-items-center gap-2 active" asp-controller="Home" asp-action="Index">
                             <i class="bi bi-house-fill"></i> Dashboard
                         </a>
                     </li>
+                    @*Orders*@
                     <li class="nav-item">
-                        <a class="nav-link d-flex gap-2 align-items-center" href="#"><i class="bi bi-file-earmark-text"></i> Orders</a>
+                        <a class="nav-link d-flex gap-2 align-items-center" asp-controller="Orders" asp-action="AddOrder">
+                            <i class="bi bi-file-earmark-text"></i> Orders</a>
                     </li>
+                    @*Products*@
                     <li class="nav-item">
-                        <a class="nav-link d-flex gap-2 align-items-center" href="#"><i class="bi bi-cart"></i> Products</a>
+                        <a class="nav-link d-flex gap-2 align-items-center" asp-controller="Products" asp-action="AddProduct">
+                            <i class="bi bi-cart"></i> Products</a>
                     </li>
+                    @*Customers*@
                     <li class="nav-item">
-                        <a class="nav-link d-flex gap-2 align-items-center" asp-controller="Home" asp-action="CreateCustomer">
+                        <a class="nav-link d-flex gap-2 align-items-center" asp-controller="Customers" asp-action="AddCustomer">
                             <i class="bi bi-people"></i> Customers
                         </a>
                     </li>
+                    @*Category*@
                     <li class="nav-item">
-                        <a class="nav-link d-flex gap-2 align-items-center" href="#"><i class="bi bi-list-ul"></i> OrderDetails</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link d-flex gap-2 align-items-center" asp-controller="Home" asp-action="CreateCategory">
+                        <a class="nav-link d-flex gap-2 align-items-center" asp-controller="Categories" asp-action="AddCategory">
                             <i class="bi bi-tags"></i> Category
                         </a>
                     </li>
+                    @*Blog*@
                     <li class="nav-item">
                         <a class="nav-link d-flex gap-2 align-items-center" href="#"><i class="bi bi-journal-text"></i> Blog</a>
                     </li>
+                    @*Slider*@
                     <li class="nav-item">
                         <a class="nav-link d-flex gap-2 align-items-center" href="#"><i class="bi bi-sliders"></i> Slider</a>
                     </li>
+                    @*Topic*@
                     <li class="nav-item">
                         <a class="nav-link d-flex gap-2 align-items-center" href="#"><i class="bi bi-chat-left-text"></i> Topic</a>
                     </li>

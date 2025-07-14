@@ -1,0 +1,41 @@
+﻿@model Store.WebUI.Models.ViewModel.GetByIdViewModel.CategoriesGetByIdViewModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<head>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+</head>
+
+<h1>
+    Category Page
+</h1>
+
+<table class="table table-bordered">
+    <thead class="table-light">
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Image URL</th>
+            <th>Icon</th>
+            <th>Slug</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @* Use Model to access View Model *@
+       
+            <tr>
+                <td>@Model.Category?.Id</td>
+                <td>@Model.Category?.Name</td>
+                <td>@Model.Category?.Description</td>
+                <td><img src=@Model.Category?.ImageUrl style="width: 100px; height: auto" alt=@Model.Category?.ImageUrl /></td>
+                <td>@Model.Category?.Icon</td>
+                <td>@Model.Category?.Slug</td>
+            </tr>
+        
+    </tbody>
+</table>
+

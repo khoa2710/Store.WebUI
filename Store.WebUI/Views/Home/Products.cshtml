@@ -1,0 +1,80 @@
+﻿@model Store.WebUI.Models.ViewModel.HomeViewModel.HomeProductsViewModel
+
+@*
+    Strong Typed View
+*@
+@{
+    
+    ViewData["Title"] = "Product Page";
+}
+<head>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+</head>
+
+@{
+    var product = new ProductDto
+            {
+                Id = 1,
+                Name = "Iphone",
+                Description = "New",
+                DiscountAmount = 30,
+                ImageUrl = "/image/apple.png",
+                IsActive = true,
+                Price = 800,
+                StockQuantity = 200,
+                CategoryId = 35
+            };
+}
+<h1>
+    Product Page
+</h1>
+<h3>Example of elements in a product</h3>
+<ul>
+    <li>Product Id = @product.Id</li>
+    <li>Product Name = @product.Name</li>
+    <li>Description = @product.Description</li>
+    <li>Discount Amount = @product.DiscountAmount</li>
+    <li>Image URL = @product.ImageUrl</li>
+    <li> Active = @product.IsActive</li>
+    <li> Price = @product.Price</li>
+    <li> Stock Quantity = @product.StockQuantity</li>
+</ul>
+<br />
+
+
+<table class="table table-bordered">
+    <thead class="table-light">
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Discount Amount</th>
+        <th>Image URL</th>
+        <th>Active</th>
+        <th>Price</th>
+        <th>Stock Quantity</th>
+        <th>Category</th>
+    </tr>
+    </thead>
+    <tbody>
+         @* Use Model to access View Model *@
+        @foreach (var productItem in Model.Products)
+        {
+        <tr>
+
+                <td>@productItem.Id</td>
+                <td>@productItem.Name</td>
+                <td>@productItem.Description</td>
+                <td>@productItem.DiscountAmount %</td>
+                <td><img src=@productItem.ImageUrl style="width: 50px; height: auto" /></td>
+                <td>@(productItem.IsActive == true ? "Active" : "Unactive")</td>
+                <td>@productItem.Price</td>
+                <td>@(productItem.StockQuantity > 0 ? "Available" : "Unavailable")</td>
+        </tr>
+        }
+
+    </tbody>
+
+</table>
+
+

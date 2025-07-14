@@ -1,0 +1,48 @@
+﻿@model AddCategorySubmitModel
+<div class="container py-4">
+    <h4 class="mb-4 text-center">Add Category</h4>
+    <div class="card shadow-sm">
+        <div class="card-body">
+            @using (Html.BeginForm(
+            "AddCategory",
+            "Categories",
+            FormMethod.Post,
+            new { @class = "row g-3" }
+            ))
+            {
+                <div class="col-12">
+                    @Html.LabelFor(m => m.Name, new { @class = "form-label" })
+                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Name, null, new { @class = "text-danger small" })
+                </div>
+                <div class="col-12">
+                    @Html.LabelFor(m => m.Slug, new { @class = "form-label" })
+                    @Html.TextBoxFor(m => m.Slug, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Slug, null, new { @class = "text-danger small" })
+                </div>
+                <div class="col-12">
+                    @Html.LabelFor(m => m.Description, new { @class = "form-label" })
+                    @Html.TextAreaFor(m => m.Description, 3, 0, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Description, null, new { @class = "text-danger small" })
+                </div>
+                <div class="col-md-6">
+                    @Html.LabelFor(m => m.Icon, new { @class = "form-label" })
+                    @Html.TextBoxFor(m => m.Icon, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Icon, null, new { @class = "text-danger small" })
+                </div>
+                <div class="col-md-6">
+                    @Html.LabelFor(m => m.ImageUrl, new { @class = "form-label" })
+                    @Html.TextBoxFor(m => m.ImageUrl, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.ImageUrl, null, new { @class = "text-danger small" })
+                </div>
+                <div class="col-12 d-flex justify-content-end">
+                    <button type="submit" class="btn btn-primary">Create Category</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script src="/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}

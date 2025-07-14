@@ -1,4 +1,4 @@
-namespace Store.WebUI.Models
+namespace Store.WebUI.Models.ViewModel
 {
     public class ErrorViewModel
     {

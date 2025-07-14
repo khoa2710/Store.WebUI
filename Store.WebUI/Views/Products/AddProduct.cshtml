@@ -1,0 +1,90 @@
+﻿@model AddProductSubmitModel
+@{
+    //var categories = ViewBag.Categories;
+        // get view data from controller
+    var categorySelectOptions = ViewData["categories"] as List<CategoryDto>;
+}
+
+<div class="container py-4">
+    <h4 class="mb-4 text-center text-shadow">Add Product</h4>
+    <div class="card shadow-sm">
+        <div class="card-body"> 
+                @using (Html.BeginForm("AddProduct", "Products", FormMethod.Post))
+                {
+                    <div class="mb-4">
+                        @Html.LabelFor(x => x.Name, new { @class = "form-label" })
+                        @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+                        <div class="form-text text-danger">
+                            @Html.ValidationMessageFor(x => x.Name)
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        @Html.LabelFor(x => x.Description, new { @class = "form-label" })
+                        @Html.TextAreaFor(x => x.Description, new { @class = "form-control" })
+                        <div class="form-text text-danger">
+                            @Html.ValidationMessageFor(x => x.Description)
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        @Html.LabelFor(x => x.Price, new { @class = "form-label" })
+                        @Html.TextBoxFor(x => x.Price, new { @class = "form-control", type = "number" })
+                        <div class="form-text text-danger">
+                            @Html.ValidationMessageFor(x => x.Price)
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        @Html.LabelFor(x => x.ImageUrl, new { @class = "form-label" })
+                        @Html.TextAreaFor(x => x.ImageUrl, new { @class = "form-control" })
+                        <div class="form-text text-danger">
+                            @Html.ValidationMessageFor(x => x.ImageUrl)
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        @Html.LabelFor(x => x.StockQuantity, new { @class = "form-label" })
+                        @Html.TextBoxFor(x => x.StockQuantity, new { @class = "form-control" })
+                        <div class="form-text text-danger">
+                            @Html.ValidationMessageFor(x => x.StockQuantity)
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        @Html.LabelFor(x => x.CategoryId, new { @class = "form-label" })
+                        @Html.DropDownListFor(x => x.CategoryId, new SelectList(categorySelectOptions, "Id", "Name"), new
+                            {
+                                @class = "form-control"
+                            })
+                        <div class="form-text text-danger">
+                            @Html.ValidationMessageFor(x => x.CategoryId)
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        @Html.LabelFor(x => x.IsActive, new { @class = "form-label" })
+                        @Html.CheckBoxFor(x => x.IsActive, new { @class = "form-check-label" })
+                        <div class="form-text text-danger">
+                            @Html.ValidationMessageFor(x => x.IsActive)
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        @Html.LabelFor(x => x.DiscountAmount, new { @class = "form-label" })
+                        @Html.TextBoxFor(x => x.DiscountAmount, new { @class = "form-control" })
+                        <div class="form-text text-danger">
+                            @Html.ValidationMessageFor(x => x.DiscountAmount)
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        @Html.LabelFor(x => x.Badges, new { @class = "form-label" })
+                        @Html.TextAreaFor(x => x.Badges, new { @class = "form-control" })
+                        <div class="form-text text-danger">
+                            @Html.ValidationMessageFor(x => x.Badges)
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+
+                }
+            </div>
+        </div>
+</div>
+@section Scripts{
+    <script src="/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}

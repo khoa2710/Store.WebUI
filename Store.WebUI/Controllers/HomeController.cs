@@ -1,6 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Store.WebUI.Models;
+using Store.WebUI.Models.Dto;
+using Store.WebUI.Models.ViewModel;
 using System.Diagnostics;
+
 
 namespace Store.WebUI.Controllers
 {
@@ -34,5 +37,7 @@ namespace Store.WebUI.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+       
     }
 }
