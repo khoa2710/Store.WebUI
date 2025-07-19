@@ -1,12 +1,15 @@
 ﻿// Controllers/ProductsController.cs
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using Store.WebUI.Entity;
 using Store.WebUI.Models.Dto;
 using Store.WebUI.Models.SubmitModel;
+using Store.WebUI.Models.ViewModel.EditByIdViewModel;
 using Store.WebUI.Models.ViewModel.GetByIdViewModel;
 using Store.WebUI.Models.ViewModel.HomeViewModel;
 using Store.WebUI.Repositories;
+using Store.WebUI.Services;
 
 namespace Store.WebUI.Controllers
 {
@@ -14,23 +17,44 @@ namespace Store.WebUI.Controllers
     {
         private readonly IProductRepository _productRepository;
         private readonly ICategoryRepository _categoryRepository;
+        public readonly IUploadService _uploadService;
 
-        public ProductsController(IProductRepository productRepository, ICategoryRepository categoryRepository)
+        public ProductsController(IProductRepository productRepository, ICategoryRepository categoryRepository, IUploadService uploadService)
         {
             _productRepository = productRepository;
             _categoryRepository = categoryRepository;
+            _uploadService = uploadService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string? productName, string? categoryName, decimal? priceFrom,decimal? priceTo )
         {
             var query = _productRepository.Products.Include(x => x.Category).AsNoTracking();
+
+            if (!string.IsNullOrEmpty(productName))
+            {
+                query = query.Where(x => x.Name.ToLower().Contains(productName.ToLower()));
+            }
+
+            if (!string.IsNullOrEmpty(categoryName)) 
+            {
+                query = query.Where(x => x.Category.Name.ToLower().Contains(categoryName.ToLower()));
+            }
+            if (priceFrom.HasValue)
+            {
+                query = query.Where(p => p.Price >= priceFrom.Value);
+            }
+
+            if (priceTo.HasValue)
+            {
+                query = query.Where(p => p.Price <= priceTo.Value);
+            }
             var items = await query.Select(p => new ProductDto
             {
                 Id = p.Id,
                 Name = p.Name,
                 Badges = p.Badges,
                 CategoryId = p.CategoryId,
-                CategoryName = p.Category.Name,
+                CategoryName = p.Category!.Name,
                 Description = p.Description,
                 DiscountAmount = p.DiscountAmount,
                 ImageUrl = p.ImageUrl,
@@ -41,7 +65,13 @@ namespace Store.WebUI.Controllers
 
             var model = new HomeProductsViewModel
             {
-                Products = items
+                Products = items,
+                ProductName = productName,
+                CategoryName = categoryName,
+                PriceFrom = priceFrom,
+                PriceTo = priceTo
+                
+
             };
             return View(model);
         }
@@ -107,17 +137,27 @@ namespace Store.WebUI.Controllers
         [HttpPost]
         public async Task<IActionResult> AddProduct(AddProductSubmitModel model)
         {
-            // validate category
-
+            
             if (ModelState.IsValid)
             {
-                // add product
+                if (!_uploadService.ExtensionWhiteList(model.ProductImage) || !_uploadService.SizeRestriction(model.ProductImage))
+                {
+                    return BadRequest("Invalid file type or size");
+                }
+
+                var standardizedName = _uploadService.StandardizeFileName(model.ProductImage.FileName);
+                var imageLink = await _uploadService.SaveFileAsync(model.ProductImage);
+                if (imageLink.StartsWith("Cannot"))
+                {
+                    return BadRequest(imageLink);
+
+                }
                 var entity = new Product
                 {
                     Name = model.Name!,
                     Description = model.Description,
                     Price = model.Price,
-                    ImageUrl = model.ImageUrl,
+                    ImageUrl = imageLink,
                     StockQuantity = model.StockQuantity,
                     CategoryId = model.CategoryId,
                     IsActive = model.IsActive,
@@ -180,7 +220,7 @@ namespace Store.WebUI.Controllers
                 Name = x.Name,
                 Description = x.Description,
                 ImageUrl = x.ImageUrl,
-                Badges = string.Join(",", x.Badges),
+                Badges = string.Join(",", x.Badges!),
                 CategoryId = x.CategoryId,
                 DiscountAmount = x.DiscountAmount,
                 IsActive = x.IsActive,          
@@ -191,32 +231,49 @@ namespace Store.WebUI.Controllers
             return View(model);
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditById(int id, EditProductSubmitModel model) 
         {
-            
-            if (ModelState.IsValid)
+            var query = _productRepository.Products.AsNoTracking();
+            var item = await query.FirstOrDefaultAsync(p => p.Id == model.Id);
+            if (query == null)
             {
-                var query = _productRepository.Products.AsNoTracking();
-                var item = await query.FirstOrDefaultAsync(p => p.Id == model.Id);
-                if (query == null) { 
-                    return NotFound(); 
+                return NotFound();
+            }
+            string savedLink = model.ImageUrl!;
+
+            if (model.ProductImage != null)
+            {
+                if (!_uploadService.ExtensionWhiteList(model.ProductImage) || !_uploadService.SizeRestriction(model.ProductImage))
+                {
+                    ModelState.AddModelError("Image Type","Invalid image type");
                 }
 
+                var standardizedName = _uploadService.StandardizeFileName(model.ProductImage.FileName);
+                var imageLink = await _uploadService.SaveFileAsync(model.ProductImage);
+                if (imageLink.StartsWith("Cannot"))
+                {
+                    ModelState.AddModelError("Save File", imageLink);
+                }
+                savedLink = imageLink;
+            }
+
+            if (ModelState.IsValid)
+            {
                 item!.Name = model.Name;
                 item.Description = model.Description;
-                item.ImageUrl = model.ImageUrl;
+                item.ImageUrl = savedLink;
                 item.StockQuantity = model.StockQuantity;
                 item.Price = model.Price;
                 item.IsActive = model.IsActive;
                 item.CategoryId = model.CategoryId;
                 item.DiscountAmount = model.DiscountAmount;
-                item.Badges = model.Badges.Split(',').ToList();
+                item.Badges = model.Badges!.Split(',').ToList();
                 item.EditAt = DateTimeOffset.UtcNow;
                 _productRepository.Edit(item);
                 await _productRepository.SaveChangeAsync();
-
-                return RedirectToAction(nameof(Index));
-
+                
+                
             }
             var categories = _categoryRepository.Categories.AsNoTracking();
             var category = await categories.Select(x => new CategoryDto
@@ -234,7 +291,7 @@ namespace Store.WebUI.Controllers
                 Name = "Select a category"
             });
             ViewData["categories"] = category;
-            return View(model);
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpPost]

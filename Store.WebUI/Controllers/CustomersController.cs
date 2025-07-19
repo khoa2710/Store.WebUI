@@ -17,24 +17,54 @@ namespace Store.WebUI.Controllers
             _customerRepository = customerRepository;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string? customerName, string? email, string? phone,
+                                       DateTimeOffset? createFrom, DateTimeOffset? createTo)
         {
             var query = _customerRepository.Customers.AsNoTracking();
+
+            if (!string.IsNullOrWhiteSpace(customerName))
+            {
+                query = query.Where(c => c.Name.ToLower().Contains(customerName.ToLower()));
+            }
+            if (!string.IsNullOrWhiteSpace(email))
+            {
+                query = query.Where(c => c.Email.ToLower().Contains(email.ToLower()));
+            }
+            if (!string.IsNullOrWhiteSpace(phone))
+            {
+                query = query.Where(c => c.Phone.Contains(phone));
+            }
+            if (createFrom.HasValue)
+            {
+                query = query.Where(c => c.CreateAt >= createFrom.Value);
+            }
+            if (createTo.HasValue)
+            {
+                query = query.Where(c => c.CreateAt <= createTo.Value);
+            }
+
             var items = await query.Select(c => new CustomerDto
             {
                 Id = c.Id,
                 Name = c.Name,
                 Email = c.Email,
                 Address = c.Address,
-                Phone = c.Phone
+                Phone = c.Phone,
+                CreateAt = c.CreateAt
             }).ToListAsync();
 
             var model = new HomeCustomersViewModel
             {
-                Customers = items 
+                Customers = items,
+                CustomerName = customerName,
+                Email = email,
+                Phone = phone,
+                CreateFrom = createFrom,
+                CreateTo = createTo
             };
             return View(model);
         }
+
 
         public async Task<IActionResult> GetById(int id)
         {

@@ -12,7 +12,7 @@ namespace Store.WebUI.Models.SubmitModel
         [Display(Name = "Mo Ta")]
         public string? Description { get; set; }
         public decimal Price { get; set; }
-        [Display(Name = "Link Hinh Anh")]
+        [Display(Name = "Hinh Anh")]
         public string? ImageUrl { get; set; }
         [Display(Name = "So luong trong kho")]
         public int StockQuantity { get; set; }
@@ -27,5 +27,6 @@ namespace Store.WebUI.Models.SubmitModel
         public decimal DiscountAmount { get; set; }
         [Display(Name = "Badge")]
         public string? Badges { get; set; }
+        public IFormFile? ProductImage { get; set; }
     }
 }

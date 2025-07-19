@@ -1,4 +1,4 @@
-﻿@model EditCategorySubmitModel
+﻿    @model EditCategorySubmitModel
 <div class="page-title">
     <h1 class="small">
         Caregory Add
@@ -8,7 +8,7 @@
     <div class="col-12 col-md-6">
         <div class="card">
             <div class="card-body">
-                @using (Html.BeginForm("EditById", "Categories", FormMethod.Post))
+                @using (Html.BeginForm("EditById", "Categories", new { id = Model.Id }, FormMethod.Post))
                 {
                     <div class="mb-4">
                         @Html.LabelFor(x => x.Name, new { @class = "form-label" })

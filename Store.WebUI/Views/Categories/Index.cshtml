@@ -3,12 +3,48 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    var categorySelectOptions = ViewData["categories"] as List<CategoryDto>;
 }
+
+
 <head>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 </head>
 <h1 class="mb-3 text-center">Categories</h1>
 <a asp-action="AddCategory" class="btn btn-success mb-3">Add New Category</a>
+<div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <span class="fw-semibold">Category Filters</span>
+            <button class="btn btn-sm btn-link text-decoration-none"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#categoryFilter"
+                    aria-expanded="true"
+                    aria-controls="categoryFilter">
+                <i class="bi bi-sliders"></i> Toggle
+            </button>
+        </div>
+
+        <div id="categoryFilter" class="collapse">
+            <div class="card-body">
+                @using (Html.BeginForm(FormMethod.Get, new { @class = "row g-3" }))
+                {
+                    <div class="col-md-3">@Html.TextBox("categoryName", Model?.CategoryName, new { @class = "form-control", placeholder = "Category Name" })</div>
+                    <div class="col-md-3">@Html.TextBox("slug", Model?.Slug, new { @class = "form-control", placeholder = "Slug" })</div>
+                    <div class="col-md-3">@Html.TextBox("createFrom", Model?.CreateFrom?.ToString("yyyy-MM-dd"), new { @class = "form-control", type = "date" })</div>
+                    <div class="col-md-3">@Html.TextBox("createTo", Model?.CreateTo?.ToString("yyyy-MM-dd"), new { @class = "form-control", type = "date" })</div>
+                    <div class="col-md-2 d-grid"><button type="submit" class="btn btn-primary">Find</button></div>
+                }
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+
+
 <table class="table table-bordered table-hover">
     <thead class="table-light"> 
         <tr>
@@ -50,4 +86,35 @@
         }
     </tbody>
 </table>
+@* navigation bar*@
+@if (Model.TotalPages > 1)
+{   @*aria-label offers a description *@
+    <nav aria-label="Page navigation">
+        @*mấy cái mà giống nhưu navigation bar *@
+        <ul class="pagination justify-content-center"> 
+            <li class="page-item @(Model.CurrentPage == 1 ? "disabled" : "")">
+                <a class="page-link"asp-route-page="@(Model.CurrentPage - 1)" asp-route-pageSize="@Model.PageSize">&lt
+                </a>
+            </li>
+
+            @foreach (var p in Model.PageNumbers)
+            {
+                @*asp route là viết lại cái url ở tre*@
+                <li class="page-item @(p == Model.CurrentPage ? "active" : "")">
+                    <a class="page-link"asp-route-page="@p"
+                    asp-route-pageSize="@Model.PageSize">@(p == Model.CurrentPage ? $"{p}" : p.ToString())
+                    </a>
+                </li>
+            }
+            @*boostrap*@
+            <li class="page-item @(Model.CurrentPage == Model.TotalPages ? "disabled" : "")">
+                <a class="page-link"asp-route-page="@(Model.CurrentPage + 1)"
+                    asp-route-pageSize="@Model.PageSize">
+                    &gt;
+                </a>
+            </li>
+        </ul>
+    </nav>
+}
+
 

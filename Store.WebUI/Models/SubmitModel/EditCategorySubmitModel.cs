@@ -3,7 +3,9 @@
 namespace Store.WebUI.Models.SubmitModel
 {
     public class EditCategorySubmitModel
+
     {
+        public int Id { get; set; }
         [Required(ErrorMessage = "Cannot be null")]
         public string? Name { get; set; }
         [Required(ErrorMessage = "Cannot be null")]
