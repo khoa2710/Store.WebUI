@@ -1,4 +1,4 @@
-﻿using Store.WebUI.Models.Dto;
+﻿    using Store.WebUI.Models.Dto;
 
 namespace Store.WebUI.Models.Dto
 {
@@ -15,8 +15,10 @@ namespace Store.WebUI.Models.Dto
         public string? BillingAddress { get; set; }
         public bool IsActive { get; set; }
         public string? Note { get; set; }
+        public DateTimeOffset? CreateAt { get; set; }
 
-    
+        public decimal TotalPrice { get; set; }
+        public string ProductNames { get; set; } = null!;
 
 
     }

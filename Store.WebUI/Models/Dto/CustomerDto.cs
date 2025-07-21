@@ -9,6 +9,7 @@ namespace Store.WebUI.Models.Dto
         public string? Email { get; set; }
         public string? Address { get; set; }
         public string? Phone { get; set; }
+        public DateTimeOffset? CreateAt { get; set; }
 
 
     }

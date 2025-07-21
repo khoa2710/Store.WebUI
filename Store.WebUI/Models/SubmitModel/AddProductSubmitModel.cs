@@ -1,4 +1,5 @@
-﻿using Store.WebUI.Entity;
+﻿using Microsoft.AspNetCore.Http;
+using Store.WebUI.Entity;
 using System.ComponentModel.DataAnnotations;
 
 namespace Store.WebUI.Models.SubmitModel
@@ -9,7 +10,7 @@ namespace Store.WebUI.Models.SubmitModel
         [Required(ErrorMessage = "Vui long nhap {0}")]
         [StringLength(255)]
         public string? Name { get; set; }
-        [Display(Name = "TMo Ta")]
+        [Display(Name = "Mo Ta")]
 
         public string? Description { get; set; }
         public decimal Price { get; set; }
@@ -30,5 +31,7 @@ namespace Store.WebUI.Models.SubmitModel
         public List<string>? Badges { get; set; }
         public DateTimeOffset CreateAt { get; set; }
         public DateTimeOffset EditAt { get; set;}
+        [Required]
+        public IFormFile? ProductImage { get; set; }
     }
 }

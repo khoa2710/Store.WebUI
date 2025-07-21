@@ -2,18 +2,16 @@
 @{
     //var categories = ViewBag.Categories;
     // get view data from controller
+    // get view data from controller
     var categorySelectOptions = ViewData["categories"] as List<CategoryDto>;
 }
+    <link href="~/css/image.css" rel="stylesheet" />
 <div class="container py-4">
-    <h1 class="mb-4 text-center">Add Product</h1>
+    <h1 class="mb-4 text-center">Edit Product</h1>
     <div class="card shadow-sm">
         <div class="card-body">
-          @using (Html.BeginForm(
-              "AddProduct", 
-              "Products", 
-              FormMethod.Post, 
-              new { @class = "row g-3" }))
-          {
+            @using (Html.BeginForm("EditById", "Products", new { id = Model.Id }, FormMethod.Post, true, new { @class = "row g-3" }))
+            {
                 <div class="col-md-6">
                         @Html.LabelFor(m => m.Name, new { @class = "form-label" })
                         @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
@@ -34,6 +32,29 @@
                       @Html.TextBoxFor(m => m.Price, new { @class = "form-control", type = "number", step = "0.01" })
                       @Html.ValidationMessageFor(m => m.Price, null, new { @class = "text-danger small" })
                 </div>
+
+                @*image upload*@
+                <div class="mb-4">
+                    <div class="mb-3">
+                        @Html.HiddenFor(x => x.ImageUrl, new { type = "hidden" })
+                        <div class="card mb-0 shadow-sm">
+                            
+                                @Html.LabelFor(x => x.ImageUrl, new { @class = "form-label", @style = "margin-bottom: 1.0rem, margin-top: 1.5rem" })
+                            <img src="@Model.ImageUrl" class="small-image  card-img" />
+                        </div>
+                    </div>
+                    <div class="col-md-6 " >
+                        @Html.TextBoxFor(x => x.ProductImage, new { type = "file" , @class = "form-controll" })
+                    </div>
+
+
+                    <div class="form-text text-danger">
+                        @Html.ValidationMessageFor(x => x.ProductImage)
+                    </div>
+                </div>
+
+
+
                 <div class="col-12">
                       @Html.LabelFor(m => m.Description, new { @class = "form-label" })
                       @Html.TextAreaFor(m => m.Description, 3, 0, new { @class = "form-control" })
@@ -54,7 +75,7 @@
                       @Html.LabelFor(m => m.IsActive, new { @class = "form-check-label" })
                 </div>
                 <div class="col-12 d-flex justify-content-end">
-                  <button type="submit" class="btn btn-primary">Create Product</button>
+                  <button type="submit" class="btn btn-primary">Edit Product</button>
                 </div>
           }
         </div>

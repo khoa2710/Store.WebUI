@@ -8,7 +8,38 @@
     <h1 class="mb-3 text-center">Customers</h1>
 
     <a asp-action="AddCustomer" class="btn btn-success mb-3">Add New Customer</a>
+    <div>
 
+        <div class="card shadow-sm mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span class="fw-semibold">Customer Filters</span>
+                <button class="btn btn-sm btn-link text-decoration-none"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#customerFilter"
+                        aria-expanded="true"
+                        aria-controls="customerFilter">
+                    <i class="bi bi-sliders"></i> Toggle
+                </button>
+            </div>
+
+            <div id="customerFilter" class="collapse">
+                <div class="card-body">
+                    @using (Html.BeginForm(FormMethod.Get, new { @class = "row g-3" }))
+                    {
+                        <div class="col-md-3">@Html.TextBox("customerName", Model?.CustomerName, new { @class = "form-control", placeholder = "Customer Name" })</div>
+                        <div class="col-md-3">@Html.TextBox("email", Model?.Email, new { @class = "form-control", placeholder = "Email" })</div>
+                        <div class="col-md-2">@Html.TextBox("phone", Model?.Phone, new { @class = "form-control", placeholder = "Phone" })</div>
+                        <div class="col-md-2">@Html.TextBox("createFrom", Model?.CreateFrom?.ToString("yyyy-MM-dd"), new { @class = "form-control", type = "date" })</div>
+                        <div class="col-md-2">@Html.TextBox("createTo", Model?.CreateTo?.ToString("yyyy-MM-dd"), new { @class = "form-control", type = "date" })</div>
+                        <div class="col-md-2 d-grid"><button type="submit" class="btn btn-primary">Find</button></div>
+                    }
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
     <table class="table table-bordered table-hover">    
         <thead class="table-light">
             <tr>

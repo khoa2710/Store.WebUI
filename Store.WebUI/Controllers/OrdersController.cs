@@ -29,26 +29,75 @@ namespace Store.WebUI.Controllers
             _productRepository = productRepository;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string? orderName, DateTimeOffset? createFrom,
+                                       DateTimeOffset? createTo, bool? isActive,
+                                       string? status, string? productName,
+                                       decimal? priceMin, decimal? priceMax)
         {
-            var query = _orderRepository.Orders.AsNoTracking();
+            var query = _orderRepository.Orders
+                .Include(o => o.OrderDetails).ThenInclude(d => d.Product)
+                .AsNoTracking();
+
+            if (!string.IsNullOrWhiteSpace(orderName))
+            {
+                query = query.Where(o => o.Name.ToLower().Contains(orderName.ToLower()));
+            }
+            if (createFrom.HasValue)
+            {
+                query = query.Where(o => o.CreateAt >= createFrom.Value);
+            }
+            if (createTo.HasValue)
+            {
+                query = query.Where(o => o.CreateAt <= createTo.Value);
+            }
+            if (isActive.HasValue)
+            {
+                query = query.Where(o => o.IsActive == isActive);
+            }
+            if (!string.IsNullOrWhiteSpace(status))
+            {
+                query = query.Where(o => o.Status.ToLower().Contains(status.ToLower()));
+            }
+            if (!string.IsNullOrWhiteSpace(productName))
+            {
+                query = query.Where(o => o.OrderDetails.Any(d => d.Product!.Name.ToLower().Contains(productName.ToLower())));
+            }
+            if (priceMin.HasValue)
+            {
+                query = query.Where(o => o.OrderDetails.Sum(d => d.Price) >= priceMin);
+            }
+            if (priceMax.HasValue)
+            {
+                query = query.Where(o => o.OrderDetails.Sum(d => d.Price) <= priceMax);
+            }
+
             var items = await query.Select(o => new OrderDto
             {
                 Id = o.Id,
                 Name = o.Name,
-                OrderDate = DateTimeOffset.UtcNow,  
-                OrderAddress = o.OrderAddress,
-                BillingAddress = o.BillingAddress,
+                CreateAt = o.CreateAt,
                 IsActive = o.IsActive,
-                Note = o.Note
+                Status = o.Status,
+                Note = o.Note,
+                TotalPrice = o.OrderDetails.Sum(d => d.Price),
+                ProductNames = string.Join(", ", o.OrderDetails.Select(d => d.Product!.Name))
             }).ToListAsync();
 
             var model = new HomeOrdersViewModel
             {
-                Orders = items
+                Orders = items,
+                OrderName = orderName,
+                CreateFrom = createFrom,
+                CreateTo = createTo,
+                IsActive = isActive,
+                Status = status,
+                ProductName = productName,
+                PriceMin = priceMin,
+                PriceMax = priceMax
             };
             return View(model);
         }
+
 
         public async Task<IActionResult> GetById(int id)
         {
@@ -56,10 +105,12 @@ namespace Store.WebUI.Controllers
                                         .Include(o => o.Product)
                                         .AsNoTracking()
                                         .Where(o => o.OrderId == id);
-
-            var item = await query.Select(o => new OrderDetailDto
+            if (query == null) 
             {
-                //// -- ORDER DETAIL -
+                return NotFound();
+            }
+            var item = await query.Select(o => new OrderDetailDto
+            {   
                 
                 OrderId = o.OrderId,
                 ProductId = o.ProductId,
@@ -217,7 +268,7 @@ namespace Store.WebUI.Controllers
                 Id = 0,
                 Name = "Select Customer"
             });
-            ViewData["customers"] = customer;
+            ViewData["customers"] = customer;   
             //product dropdownlist
             var productQuery = _productRepository.Products.AsNoTracking();
             var product = await productQuery.Select(p => new ProductDto

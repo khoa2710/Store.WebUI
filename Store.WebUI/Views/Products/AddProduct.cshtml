@@ -9,8 +9,8 @@
     <h4 class="mb-4 text-center text-shadow">Add Product</h4>
     <div class="card shadow-sm">
         <div class="card-body"> 
-                @using (Html.BeginForm("AddProduct", "Products", FormMethod.Post))
-                {
+            @using (Html.BeginForm("AddProduct", "Products", FormMethod.Post, new {enctype="multipart/form-data"} ))
+            {
                     <div class="mb-4">
                         @Html.LabelFor(x => x.Name, new { @class = "form-label" })
                         @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
@@ -35,14 +35,14 @@
                     </div>
                     <div class="mb-4">
                         @Html.LabelFor(x => x.ImageUrl, new { @class = "form-label" })
-                        @Html.TextAreaFor(x => x.ImageUrl, new { @class = "form-control" })
+                        @Html.TextBoxFor( x=> x.ProductImage, new {type = "file"})
                         <div class="form-text text-danger">
                             @Html.ValidationMessageFor(x => x.ImageUrl)
                         </div>
                     </div>
                     <div class="mb-4">
                         @Html.LabelFor(x => x.StockQuantity, new { @class = "form-label" })
-                        @Html.TextBoxFor(x => x.StockQuantity, new { @class = "form-control" })
+                        @Html.TextBoxFor(x => x.StockQuantity, new { @class = "form-control", Type ="number"})
                         <div class="form-text text-danger">
                             @Html.ValidationMessageFor(x => x.StockQuantity)
                         </div>

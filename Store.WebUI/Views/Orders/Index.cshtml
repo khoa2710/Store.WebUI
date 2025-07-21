@@ -1,16 +1,45 @@
 ﻿@* Views/Orders/Index.cshtml *@
 @model Store.WebUI.Models.ViewModel.HomeViewModel.HomeOrdersViewModel
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
 <head>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 </head>
 <h1 class="mb-3 text-center">Orders</h1>
 
 <a asp-action="AddOrder" class="btn btn-success mb-3">Add New Order and Order Details</a>
+<div>
+    <div class="card shadow-sm mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <span class="fw-semibold">Order Filters</span>
+            <button class="btn btn-sm btn-link text-decoration-none"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#orderFilter"
+                    aria-expanded="true"
+                    aria-controls="orderFilter">
+                <i class="bi bi-sliders"></i> Toggle
+            </button>
+        </div>
+
+        <div id="orderFilter" class="collapse">
+            <div class="card-body">
+                @using (Html.BeginForm(FormMethod.Get, new { @class = "row g-3" }))
+                {
+                    <div class="col-md-3">@Html.TextBox("orderName", Model?.OrderName, new { @class = "form-control", placeholder = "Order Name" })</div>
+                    <div class="col-md-2">@Html.TextBox("createFrom", Model?.CreateFrom?.ToString("yyyy-MM-dd"), new { @class = "form-control", type = "date" })</div>
+                    <div class="col-md-2">@Html.TextBox("createTo", Model?.CreateTo?.ToString("yyyy-MM-dd"), new { @class = "form-control", type = "date" })</div>
+                    <div class="col-md-2">@Html.DropDownList("isActive", new SelectList(new[] { new { Value = "", Text = "Any Active" }, new { Value = "true", Text = "Active" }, new { Value = "false", Text = "Inactive" } }, "Value", "Text", Model?.IsActive?.ToString().ToLower()), new { @class = "form-select" })</div>
+                    <div class="col-md-3">@Html.TextBox("status", Model?.Status, new { @class = "form-control", placeholder = "Status" })</div>
+                    <div class="col-md-3">@Html.TextBox("productName", Model?.ProductName, new { @class = "form-control", placeholder = "Product Name" })</div>
+                    <div class="col-md-2">@Html.TextBox("priceMin", Model?.PriceMin, new { @class = "form-control", type = "number", placeholder = "Min $" })</div>
+                    <div class="col-md-2">@Html.TextBox("priceMax", Model?.PriceMax, new { @class = "form-control", type = "number", placeholder = "Max $" })</div>
+                    <div class="col-md-2 d-grid"><button type="submit" class="btn btn-primary">Find</button></div>
+                }
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
 <table class="table table-bordered table-hover">
     <thead class="table-light">
         <tr>

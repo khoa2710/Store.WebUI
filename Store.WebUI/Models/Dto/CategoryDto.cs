@@ -9,5 +9,6 @@
 
         public string? Icon { get; set; }
         public string? Slug { get; set; }
+        public DateTimeOffset? CreateAt { get; set; }
     }
 }
