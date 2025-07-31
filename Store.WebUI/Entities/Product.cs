@@ -12,5 +12,6 @@
         public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new HashSet<OrderDetail>();
         public decimal DiscountAmount { get; set; }
         public List<string>? Badges { get; set; }
+        public decimal Star { get; set; }
     }
 }

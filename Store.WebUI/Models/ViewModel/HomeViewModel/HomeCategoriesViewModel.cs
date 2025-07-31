@@ -14,7 +14,8 @@ namespace Store.WebUI.Models.ViewModel.HomeViewModel
         public int CurrentPage { get; set; }
         public int PageSize { get; set; }
         public int TotalPages { get; set; }
-        public List<int> PageNumbers { get; set; } = new();
+        public List<int> PageNumbers { get; set; } = new(); 
         public DateTimeOffset? CreateTo { get; set; }
+        public string? Icon { get; set; }
     }
 }

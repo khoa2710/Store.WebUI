@@ -33,5 +33,6 @@ namespace Store.WebUI.Models.SubmitModel
         public DateTimeOffset EditAt { get; set;}
         [Required]
         public IFormFile? ProductImage { get; set; }
+        public decimal Star { get; set; }
     }
 }

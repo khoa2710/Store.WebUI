@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Store.WebUI.Entity;
+using Store.WebUI.Helpers;
 using Store.WebUI.Models.Dto;
 using Store.WebUI.Models.SubmitModel;
 using Store.WebUI.Models.ViewModel.GetByIdViewModel;
@@ -17,9 +18,17 @@ namespace Store.WebUI.Controllers
             _customerRepository = customerRepository;
         }
 
-        public async Task<IActionResult> Index(string? customerName, string? email, string? phone,
-                                       DateTimeOffset? createFrom, DateTimeOffset? createTo)
+        public async Task<IActionResult> Index(string? customerName,
+                                       string? email,
+                                       string? phone,
+                                       DateTimeOffset? createFrom,
+                                       DateTimeOffset? createTo,
+                                       int page = 1,
+                                       int pageSize = 10)
         {
+            const int maxPages = 5;
+            if (page < 1) page = 1;
+
             var query = _customerRepository.Customers.AsNoTracking();
 
             if (!string.IsNullOrWhiteSpace(customerName))
@@ -34,24 +43,25 @@ namespace Store.WebUI.Controllers
             {
                 query = query.Where(c => c.Phone.Contains(phone));
             }
-            if (createFrom.HasValue)
-            {
-                query = query.Where(c => c.CreateAt >= createFrom.Value);
-            }
-            if (createTo.HasValue)
-            {
-                query = query.Where(c => c.CreateAt <= createTo.Value);
-            }
+            if (createFrom.HasValue) { query = query.Where(c => c.CreateAt >= createFrom); }
+            if (createTo.HasValue) { query = query.Where(c => c.CreateAt <= createTo); }
 
-            var items = await query.Select(c => new CustomerDto
-            {
-                Id = c.Id,
-                Name = c.Name,
-                Email = c.Email,
-                Address = c.Address,
-                Phone = c.Phone,
-                CreateAt = c.CreateAt
-            }).ToListAsync();
+            int totalRecords = await query.CountAsync();
+            int totalPages = (int)Math.Ceiling(totalRecords / (double)pageSize);
+
+            var items = await query
+                .OrderByDescending(c => c.Id)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .Select(c => new CustomerDto
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    Email = c.Email,
+                    Phone = c.Phone,
+                    Address = c.Address
+                })
+                .ToListAsync();
 
             var model = new HomeCustomersViewModel
             {
@@ -60,10 +70,15 @@ namespace Store.WebUI.Controllers
                 Email = email,
                 Phone = phone,
                 CreateFrom = createFrom,
-                CreateTo = createTo
+                CreateTo = createTo,
+                CurrentPage = page,
+                PageSize = pageSize,
+                TotalPages = totalPages,
+                PageNumbers = PagingRange.BuildPageRange(page, totalPages, maxPages)
             };
             return View(model);
         }
+
 
 
         public async Task<IActionResult> GetById(int id)

@@ -28,5 +28,6 @@ namespace Store.WebUI.Models.SubmitModel
         [Display(Name = "Badge")]
         public string? Badges { get; set; }
         public IFormFile? ProductImage { get; set; }
+        public decimal Star { get; set;  }
     }
 }
