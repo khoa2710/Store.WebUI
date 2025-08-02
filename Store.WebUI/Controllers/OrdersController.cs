@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Store.WebUI.Entity;
+using Store.WebUI.Helpers;
 using Store.WebUI.Models.Dto;
 using Store.WebUI.Models.SubmitModel;
 using Store.WebUI.Models.ViewModel.GetByIdViewModel;
@@ -29,11 +30,20 @@ namespace Store.WebUI.Controllers
             _productRepository = productRepository;
         }
 
-        public async Task<IActionResult> Index(string? orderName, DateTimeOffset? createFrom,
-                                       DateTimeOffset? createTo, bool? isActive,
-                                       string? status, string? productName,
-                                       decimal? priceMin, decimal? priceMax)
+        public async Task<IActionResult> Index(string? orderName,
+                                       DateTimeOffset? createFrom,
+                                       DateTimeOffset? createTo,
+                                       bool? isActive,
+                                       string? status,
+                                       string? productName,
+                                       decimal? priceMin,
+                                       decimal? priceMax,
+                                       int page = 1,
+                                       int pageSize = 10)
         {
+            const int maxPages = 5;
+            if (page < 1) page = 1;
+
             var query = _orderRepository.Orders
                 .Include(o => o.OrderDetails).ThenInclude(d => d.Product)
                 .AsNoTracking();
@@ -42,18 +52,9 @@ namespace Store.WebUI.Controllers
             {
                 query = query.Where(o => o.Name.ToLower().Contains(orderName.ToLower()));
             }
-            if (createFrom.HasValue)
-            {
-                query = query.Where(o => o.CreateAt >= createFrom.Value);
-            }
-            if (createTo.HasValue)
-            {
-                query = query.Where(o => o.CreateAt <= createTo.Value);
-            }
-            if (isActive.HasValue)
-            {
-                query = query.Where(o => o.IsActive == isActive);
-            }
+            if (createFrom.HasValue) { query = query.Where(o => o.CreateAt >= createFrom); }
+            if (createTo.HasValue) { query = query.Where(o => o.CreateAt <= createTo); }
+            if (isActive.HasValue) { query = query.Where(o => o.IsActive == isActive); }
             if (!string.IsNullOrWhiteSpace(status))
             {
                 query = query.Where(o => o.Status.ToLower().Contains(status.ToLower()));
@@ -62,26 +63,27 @@ namespace Store.WebUI.Controllers
             {
                 query = query.Where(o => o.OrderDetails.Any(d => d.Product!.Name.ToLower().Contains(productName.ToLower())));
             }
-            if (priceMin.HasValue)
-            {
-                query = query.Where(o => o.OrderDetails.Sum(d => d.Price) >= priceMin);
-            }
-            if (priceMax.HasValue)
-            {
-                query = query.Where(o => o.OrderDetails.Sum(d => d.Price) <= priceMax);
-            }
+            if (priceMin.HasValue) { query = query.Where(o => o.OrderDetails.Sum(d => d.Price) >= priceMin); }
+            if (priceMax.HasValue) { query = query.Where(o => o.OrderDetails.Sum(d => d.Price) <= priceMax); }
 
-            var items = await query.Select(o => new OrderDto
-            {
-                Id = o.Id,
-                Name = o.Name,
-                CreateAt = o.CreateAt,
-                IsActive = o.IsActive,
-                Status = o.Status,
-                Note = o.Note,
-                TotalPrice = o.OrderDetails.Sum(d => d.Price),
-                ProductNames = string.Join(", ", o.OrderDetails.Select(d => d.Product!.Name))
-            }).ToListAsync();
+            int totalRecords = await query.CountAsync();
+            int totalPages = (int)Math.Ceiling(totalRecords / (double)pageSize);
+
+            var items = await query
+                .OrderByDescending(o => o.Id)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .Select(o => new OrderDto
+                {
+                    Id = o.Id,
+                    Name = o.Name,
+                    CreateAt = o.CreateAt,
+                    IsActive = o.IsActive,
+                    Status = o.Status,
+                    TotalPrice = o.OrderDetails.Sum(d => d.Price),
+                    ProductNames = string.Join(", ", o.OrderDetails.Select(d => d.Product!.Name))
+                })
+                .ToListAsync();
 
             var model = new HomeOrdersViewModel
             {
@@ -93,10 +95,15 @@ namespace Store.WebUI.Controllers
                 Status = status,
                 ProductName = productName,
                 PriceMin = priceMin,
-                PriceMax = priceMax
+                PriceMax = priceMax,
+                CurrentPage = page,
+                PageSize = pageSize,
+                TotalPages = totalPages,
+                PageNumbers = PagingRange.BuildPageRange(page, totalPages, maxPages)
             };
             return View(model);
         }
+
 
 
         public async Task<IActionResult> GetById(int id)

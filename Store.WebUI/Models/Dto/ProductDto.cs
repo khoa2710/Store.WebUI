@@ -12,8 +12,10 @@ namespace Store.WebUI.Models.Dto
         public int StockQuantity { get; set; }
         public bool IsActive { get; set; }
         public decimal DiscountAmount { get; set; }
-        public List<string>? Badges { get; set; }
+        public List<string>? Badges { get; set; } = new List<string>();
         public int CategoryId   { get; set; }
         public string? CategoryName { get; set; }
+        public DateTimeOffset CreateAt { get; set; }
+        public decimal Star { get; set; }
     }
 }

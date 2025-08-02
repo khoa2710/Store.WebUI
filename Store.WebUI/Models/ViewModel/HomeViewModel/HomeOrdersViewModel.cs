@@ -17,5 +17,9 @@ namespace Store.WebUI.Models.ViewModel.HomeViewModel
         public string? ProductName { get; set; }
         public decimal? PriceMin { get; set; }
         public decimal? PriceMax { get; set; }
+        public int CurrentPage { get; set; }
+        public int PageSize { get; set; }
+        public int TotalPages { get; set; }
+        public List<int> PageNumbers { get; set; } = new(); 
     }
 }

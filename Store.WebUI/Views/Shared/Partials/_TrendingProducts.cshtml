@@ -1,0 +1,37 @@
+﻿@model List<Store.WebUI.Models.Dto.ProductDto>
+<section class="py-5 overflow-hidden">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="section-header d-flex flex-wrap justify-content-between mb-5">
+                    <h2 class="section-title">Trending Products ★ (4.0+)</h2>
+
+                    <div class="d-flex align-items-center">
+                        <a href="#" class="btn-link text-decoration-none">View More Products →</a>
+                        <div class="swiper-buttons">
+                            <button class="swiper-prev category-carousel-prev btn btn-yellow">❮</button>
+                            <button class="swiper-next category-carousel-next btn btn-yellow">❯</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="category-carousel swiper">
+                    <div class="swiper-wrapper">
+                        @foreach (var p in Model)
+                        {
+                            <partial name="Partials/_ProductItem" model="p" />
+                        }
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>

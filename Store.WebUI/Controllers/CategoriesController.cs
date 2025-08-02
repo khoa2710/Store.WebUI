@@ -71,7 +71,8 @@ namespace Store.WebUI.Controllers
                     Description = c.Description,
                     ImageUrl = c.ImageUrl,
                     Slug = c.Slug,
-                    CreateAt = c.CreateAt
+                    CreateAt = c.CreateAt,
+                    Icon = c.Icon,
                 })
                 .ToListAsync();
 

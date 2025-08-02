@@ -1,8 +1,10 @@
 ﻿// Controllers/ProductsController.cs
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using Store.WebUI.Entity;
+using Store.WebUI.Helpers;
 using Store.WebUI.Models.Dto;
 using Store.WebUI.Models.SubmitModel;
 using Store.WebUI.Models.ViewModel.EditByIdViewModel;
@@ -26,8 +28,13 @@ namespace Store.WebUI.Controllers
             _uploadService = uploadService;
         }
 
-        public async Task<IActionResult> Index(string? productName, string? categoryName, decimal? priceFrom,decimal? priceTo )
+        public async Task<IActionResult> Index(string? productName, string? categoryName, decimal? priceFrom, decimal? priceTo, DateTimeOffset? createFrom,
+                                    DateTimeOffset? createTo, int page = 1, int pageSize = 10)
         {
+            const int maxPages = 5;
+            if (page < 1) page = 1;
+            if (pageSize < 1) pageSize = 10;
+
             var query = _productRepository.Products.Include(x => x.Category).AsNoTracking();
 
             if (!string.IsNullOrEmpty(productName))
@@ -48,20 +55,33 @@ namespace Store.WebUI.Controllers
             {
                 query = query.Where(p => p.Price <= priceTo.Value);
             }
-            var items = await query.Select(p => new ProductDto
-            {
-                Id = p.Id,
-                Name = p.Name,
-                Badges = p.Badges,
-                CategoryId = p.CategoryId,
-                CategoryName = p.Category!.Name,
-                Description = p.Description,
-                DiscountAmount = p.DiscountAmount,
-                ImageUrl = p.ImageUrl,
-                IsActive = p.IsActive,
-                Price = p.Price,
-                StockQuantity = p.StockQuantity
-            }).ToListAsync();
+            if (createFrom.HasValue) { query = query.Where(p => p.CreateAt >= createFrom); }
+            if (createTo.HasValue) { query = query.Where(p => p.CreateAt <= createTo); }
+
+            int totalRecords = await query.CountAsync();
+            int totalPages = (int)Math.Ceiling(totalRecords / (double)pageSize);
+
+            var items = await query
+                .OrderByDescending(p => p.Id)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .Select(p => new ProductDto
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Badges = p.Badges,
+                    CategoryId = p.CategoryId,
+                    CategoryName = p.Category!.Name,
+                    Description = p.Description,
+                    DiscountAmount = p.DiscountAmount,
+                    ImageUrl = p.ImageUrl,
+                    IsActive = p.IsActive,
+                    Price = p.Price,
+                    StockQuantity = p.StockQuantity,
+                    Star = p.Star
+
+                })
+                .ToListAsync();
 
             var model = new HomeProductsViewModel
             {
@@ -69,9 +89,13 @@ namespace Store.WebUI.Controllers
                 ProductName = productName,
                 CategoryName = categoryName,
                 PriceFrom = priceFrom,
-                PriceTo = priceTo
-                
-
+                PriceTo = priceTo,
+                CreateFrom = createFrom,
+                CreateTo = createTo,
+                CurrentPage = page,
+                PageSize = pageSize,
+                TotalPages = totalPages,
+                PageNumbers = PagingRange.BuildPageRange(page, totalPages, maxPages)
             };
             return View(model);
         }
@@ -95,7 +119,9 @@ namespace Store.WebUI.Controllers
                 ImageUrl = p.ImageUrl,
                 IsActive = p.IsActive,
                 Price = p.Price,
-                StockQuantity = p.StockQuantity
+                StockQuantity = p.StockQuantity,
+                Star = p.Star
+
             }).FirstOrDefaultAsync();
 
             if (item == null)
@@ -165,6 +191,7 @@ namespace Store.WebUI.Controllers
                     Badges = model.Badges,
                     CreateAt = DateTimeOffset.UtcNow,
                     EditAt = DateTimeOffset.UtcNow,
+                    Star = model.Star
                 };
 
                 _productRepository.Add(entity);
@@ -270,6 +297,7 @@ namespace Store.WebUI.Controllers
                 item.DiscountAmount = model.DiscountAmount;
                 item.Badges = model.Badges!.Split(',').ToList();
                 item.EditAt = DateTimeOffset.UtcNow;
+                item.Star = model.Star;
                 _productRepository.Edit(item);
                 await _productRepository.SaveChangeAsync();
                 

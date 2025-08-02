@@ -14,5 +14,9 @@ namespace Store.WebUI.Models.ViewModel.HomeViewModel
         public string? Phone { get; set; }
         public DateTimeOffset? CreateFrom { get; set; }
         public DateTimeOffset? CreateTo { get; set; }
+        public int CurrentPage { get; set; }
+        public int PageSize { get; set; }
+        public int TotalPages { get; set; }
+        public List<int> PageNumbers { get; set; } = new();
     }
 }

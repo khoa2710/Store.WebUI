@@ -92,3 +92,14 @@
         }
     </tbody>
 </table>
+
+@Html.PageLinks(new PagingInfo()
+{
+    CurrentPage = Model.CurrentPage,
+    PageSize = Model.PageSize,
+    TotalPages = Model.TotalPages,
+
+},
+        5,
+        pageIndex => Url.Action("Index", "Products", new { page = pageIndex })
+        )

@@ -1,8 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Store.WebUI.Entities;
 using Store.WebUI.Entity;
 namespace Store.WebUI.Data
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext<AppUser, IdentityRole, string>
     {
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options){}
@@ -45,6 +48,7 @@ namespace Store.WebUI.Data
                 //--
                 entity.Property(c => c.DiscountAmount).HasColumnType("decimal(18,2)");
                 entity.Property(c => c.Badges);
+                entity.Property(c => c.Star);
             });
             //config entity Order
             modelBuilder.Entity<Order>(entity =>

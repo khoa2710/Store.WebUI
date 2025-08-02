@@ -1,0 +1,10 @@
+﻿@model Store.WebUI.Models.Dto.CategoryDto
+
+<a href="#" class="nav-link category-item swiper-slide text-center p-3" style="width: 160px; border-radius: 12px;">
+    <div class="mb-2 d-flex align-items-center justify-content-center" style="height: 100px; overflow: hidden;">
+        <img src="@Model.ImageUrl" alt="@Model.Name" style="max-height: 100%; max-width: 100%; object-fit: contain;" />
+    </div>
+    <h3 class="category-title mt-2" style="font-size: 1rem; font-weight: 500; white-space: normal;">
+        @Model.Name
+    </h3>
+</a>
